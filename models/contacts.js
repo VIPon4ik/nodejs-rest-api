@@ -11,18 +11,12 @@ const listContacts = async () => {
 
 const getContactById = async (contactId) => {
     const contacts = await listContacts();
-    console.log(contacts, contactId);
     const contact = contacts.find((contact) => contact.id === contactId);
     return contact || null;
 };
 
 const removeContact = async (contactId) => {
     const deletedContact = await getContactById(contactId);
-
-    if (!deletedContact) {
-        return null;
-    }
-
     const contacts = await listContacts();
     const newContacts = contacts.filter(
         (contact) => contact !== deletedContact
@@ -44,11 +38,6 @@ const updateContact = async (contactId, body) => {
     const { name, email, phone } = body;
     const contacts = await listContacts();
     const index = contacts.findIndex((contact) => contact.id === contactId);
-
-    if (index === -1) {
-      return null;
-    }
-
     contacts[index] = { id: contactId, name, email, phone };
     await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
 
