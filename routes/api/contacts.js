@@ -1,25 +1,25 @@
-const express = require('express')
+const express = require("express");
+const router = express.Router();
 
-const router = express.Router()
+const { validateBody, isContactWithIdExist, isFieldsInBody } = require("../../middlewares");
+const ctrl = require("../../controllers/contacts");
+const schema = require("../../schemas");
 
-router.get('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.get("/", ctrl.getAll);
 
-router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.get("/:contactId", isContactWithIdExist(), ctrl.getById);
 
-router.post('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.post("/", validateBody(schema), ctrl.add);
 
-router.delete('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.delete("/:contactId", isContactWithIdExist(), ctrl.deleteById);
 
-router.put('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.put(
+    "/:contactId",
+    isContactWithIdExist(),
+    validateBody(schema),
+    ctrl.putById
+);
 
-module.exports = router
+router.patch("/:contactId", isContactWithIdExist(), isFieldsInBody(), ctrl.patchById)
+
+module.exports = router;
