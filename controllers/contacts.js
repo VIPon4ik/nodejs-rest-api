@@ -1,4 +1,4 @@
-const contacts = require("../../models");
+const contacts = require("../models");
 const HttpError = require("../helpers");
 const contactsValidationSchema = require("../schemas");
 
