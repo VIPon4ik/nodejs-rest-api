@@ -19,7 +19,7 @@ const removeContact = async (contactId) => {
     const deletedContact = await getContactById(contactId);
     const contacts = await listContacts();
     const newContacts = contacts.filter(
-        (contact) => contact !== deletedContact
+        (contact) => contact.id !== deletedContact.id
     );
     await fs.writeFile(contactsPath, JSON.stringify(newContacts, null, 2));
     return deletedContact;

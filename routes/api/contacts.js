@@ -7,15 +7,15 @@ const schema = require("../../schemas");
 
 router.get("/", ctrl.getAll);
 
-router.get("/:contactId", ctrl.getById);
+router.get("/:contactId", isContactWithIdExist(), ctrl.getById);
 
 router.post("/", validateBody(schema), ctrl.add);
 
-router.delete("/:contactId", isContactWithIdExist, ctrl.deleteById);
+router.delete("/:contactId", isContactWithIdExist(), ctrl.deleteById);
 
 router.put(
     "/:contactId",
-    isContactWithIdExist,
+    isContactWithIdExist(),
     validateBody(schema),
     ctrl.updateById
 );

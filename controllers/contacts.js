@@ -19,8 +19,8 @@ const add = async (req, res, next) => {
 
 const deleteById = async (req, res, next) => {
     const { contactId } = req.params;
-    const result = await contacts.removeContact(contactId);
-    res.status(200).json(result);
+    await contacts.removeContact(contactId);
+    res.status(200).json({ message: 'Contact deleted' });
 };
 
 const updateById = async (req, res, next) => {
