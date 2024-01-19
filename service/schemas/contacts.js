@@ -29,8 +29,13 @@ const contactsValidationSchema = Joi.object({
     phone: Joi.string(),
 });
 
+const favoriteValidationSchema = Joi.object({
+    favorite: Joi.boolean().required(),
+})
+
 const schemas = {
     contactsValidationSchema,
+    favoriteValidationSchema
 };
 
 module.exports = {

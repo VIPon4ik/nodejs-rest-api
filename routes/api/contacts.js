@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { validateBody, isContactWithIdExist, isFieldsInBody, isValidId } = require("../../middlewares");
+const { validateBody, isContactWithIdExist, isValidId } = require("../../middlewares");
 const ctrl = require("../../controllers/contacts");
 const { schemas } = require("../../service/schemas");
 
@@ -20,6 +20,6 @@ router.put(
     ctrl.putById
 );
 
-// router.patch("/:contactId", isContactWithIdExist(), isFieldsInBody(), ctrl.patchById)
+router.patch("/:contactId/favorite", isContactWithIdExist, validateBody(schemas.favoriteValidationSchema), ctrl.patchById)
 
 module.exports = router;

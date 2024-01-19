@@ -17,20 +17,12 @@ const addContact = async (body) => {
 };
 
 const putContact = async (contactId, body) => {
-    return Contact.findByIdAndUpdate(contactId, body, {new: true})
+    return Contact.findByIdAndUpdate(contactId, body, { new: true });
 };
 
-// const patchContact = async (contactId, body) => {
-//     const { name, email, phone } = body;
-//     const contacts = await listContacts();
-//     const contact = contacts.find((contact) => contact.id === contactId);
-//     contact.name = name ?? contact.name;
-//     contact.email = email ?? contact.email;
-//     contact.phone = phone ?? contact.phone;
-//     await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-
-//     return contact;
-// };
+const patchContact = async (contactId, body) => {
+    return Contact.findByIdAndUpdate(contactId, body, { new: true });
+};
 
 module.exports = {
     listContacts,
@@ -38,5 +30,5 @@ module.exports = {
     removeContact,
     addContact,
     putContact,
-    // patchContact,
+    patchContact,
 };
