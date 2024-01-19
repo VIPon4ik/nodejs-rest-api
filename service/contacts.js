@@ -8,15 +8,9 @@ const getContactById = async (contactId) => {
     return Contact.findById(contactId);
 };
 
-// const removeContact = async (contactId) => {
-//     const deletedContact = await getContactById(contactId);
-//     const contacts = await listContacts();
-//     const newContacts = contacts.filter(
-//         (contact) => contact.id !== deletedContact.id
-//     );
-//     await fs.writeFile(contactsPath, JSON.stringify(newContacts, null, 2));
-//     return deletedContact;
-// };
+const removeContact = async (contactId) => {
+    return Contact.findByIdAndDelete(contactId);
+};
 
 const addContact = async (body) => {
     return Contact.create(body);
@@ -47,7 +41,7 @@ const addContact = async (body) => {
 module.exports = {
     listContacts,
     getContactById,
-    // removeContact,
+    removeContact,
     addContact,
     // putContact,
     // patchContact,
