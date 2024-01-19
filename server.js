@@ -11,6 +11,7 @@ mongoose
     .connect(DB_URI)
     .then(() => {
         app.listen(PORT);
+        console.log('App started, DB loaded')
     })
     .catch((error) => {
         console.log(error);

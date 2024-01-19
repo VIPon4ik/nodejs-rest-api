@@ -1,8 +1,9 @@
-
+const { Contact } = require('./schemas');
 
 const listContacts = async () => {
-    const contacts = await fs.readFile(contactsPath);
-    return JSON.parse(contacts);
+    const result = await Contact.find();
+    console.log(result);
+    return result;
 };
 
 // const getContactById = async (contactId) => {
