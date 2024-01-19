@@ -16,15 +16,9 @@ const addContact = async (body) => {
     return Contact.create(body);
 };
 
-// const putContact = async (contactId, body) => {
-//     const { name, email, phone } = body;
-//     const contacts = await listContacts();
-//     const index = contacts.findIndex((contact) => contact.id === contactId);
-//     contacts[index] = { id: contactId, name, email, phone };
-//     await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-
-//     return contacts[index];
-// };
+const putContact = async (contactId, body) => {
+    return Contact.findByIdAndUpdate(contactId, body, {new: true})
+};
 
 // const patchContact = async (contactId, body) => {
 //     const { name, email, phone } = body;
@@ -43,6 +37,6 @@ module.exports = {
     getContactById,
     removeContact,
     addContact,
-    // putContact,
+    putContact,
     // patchContact,
 };

@@ -13,12 +13,12 @@ router.post("/", validateBody(schemas.contactsValidationSchema), ctrl.add);
 
 router.delete("/:contactId", isContactWithIdExist, ctrl.deleteById);
 
-// router.put(
-//     "/:contactId",
-//     isContactWithIdExist(),
-//     validateBody(schema),
-//     ctrl.putById
-// );
+router.put(
+    "/:contactId",
+    isContactWithIdExist,
+    validateBody(schemas.contactsValidationSchema),
+    ctrl.putById
+);
 
 // router.patch("/:contactId", isContactWithIdExist(), isFieldsInBody(), ctrl.patchById)
 
