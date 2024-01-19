@@ -11,15 +11,16 @@ router.get("/:contactId", isValidId, isContactWithIdExist, ctrl.getById);
 
 router.post("/", validateBody(schemas.contactsValidationSchema), ctrl.add);
 
-router.delete("/:contactId", isContactWithIdExist, ctrl.deleteById);
+router.delete("/:contactId", isValidId, isContactWithIdExist, ctrl.deleteById);
 
 router.put(
     "/:contactId",
+    isValidId,
     isContactWithIdExist,
     validateBody(schemas.contactsValidationSchema),
     ctrl.putById
 );
 
-router.patch("/:contactId/favorite", isContactWithIdExist, validateBody(schemas.favoriteValidationSchema), ctrl.patchById)
+router.patch("/:contactId/favorite", isValidId, isContactWithIdExist, validateBody(schemas.favoriteValidationSchema), ctrl.patchById)
 
 module.exports = router;

@@ -31,7 +31,7 @@ const putById = async (req, res, next) => {
 
 const patchById = async (req, res, next) => {
     const { contactId } = req.params;
-    const result = await contacts.patchContact(contactId, req.body);
+    const result = await contacts.updateStatusContact(contactId, req.body);
     res.status(200).json(result);
 }
 
