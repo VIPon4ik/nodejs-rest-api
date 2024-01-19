@@ -1,4 +1,4 @@
-const { Contact } = require('./schemas');
+const { Contact } = require("./schemas");
 
 const listContacts = async () => {
     return Contact.find();
@@ -18,14 +18,9 @@ const getContactById = async (contactId) => {
 //     return deletedContact;
 // };
 
-// const addContact = async (body) => {
-//     const { name, email, phone } = body;
-//     const contacts = await listContacts();
-//     const contact = { id: nanoid(), name, email, phone };
-//     contacts.push(contact);
-//     await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-//     return contact;
-// };
+const addContact = async (body) => {
+    return Contact.create(body);
+};
 
 // const putContact = async (contactId, body) => {
 //     const { name, email, phone } = body;
@@ -45,7 +40,7 @@ const getContactById = async (contactId) => {
 //     contact.email = email ?? contact.email;
 //     contact.phone = phone ?? contact.phone;
 //     await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-    
+
 //     return contact;
 // };
 
@@ -53,7 +48,7 @@ module.exports = {
     listContacts,
     getContactById,
     // removeContact,
-    // addContact,
+    addContact,
     // putContact,
     // patchContact,
 };

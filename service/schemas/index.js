@@ -1,6 +1,6 @@
 const {
-    contactsValidationSchema,
+    schemas,
     Contact,
 } = require("./contacts");
 
-module.exports = { contactsValidationSchema, Contact };
+module.exports = { schemas, Contact };
