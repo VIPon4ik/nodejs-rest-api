@@ -1,16 +1,12 @@
 const { Contact } = require('./schemas');
 
 const listContacts = async () => {
-    const result = await Contact.find();
-    console.log(result);
-    return result;
+    return Contact.find();
 };
 
-// const getContactById = async (contactId) => {
-//     const contacts = await listContacts();
-//     const contact = contacts.find((contact) => contact.id === contactId);
-//     return contact || null;
-// };
+const getContactById = async (contactId) => {
+    return Contact.findById(contactId);
+};
 
 // const removeContact = async (contactId) => {
 //     const deletedContact = await getContactById(contactId);
@@ -55,7 +51,7 @@ const listContacts = async () => {
 
 module.exports = {
     listContacts,
-    // getContactById,
+    getContactById,
     // removeContact,
     // addContact,
     // putContact,

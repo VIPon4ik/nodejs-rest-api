@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-// const { validateBody, isContactWithIdExist, isFieldsInBody } = require("../../middlewares");
+const { validateBody, isContactWithIdExist, isFieldsInBody, isValidId } = require("../../middlewares");
 const ctrl = require("../../controllers/contacts");
 // const schema = require("../../schemas");
 
 router.get("/", ctrl.getAll);
 
-// router.get("/:contactId", isContactWithIdExist(), ctrl.getById);
+router.get("/:contactId", isValidId, isContactWithIdExist, ctrl.getById);
 
 // router.post("/", validateBody(schema), ctrl.add);
 
