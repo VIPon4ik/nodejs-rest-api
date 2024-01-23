@@ -4,8 +4,8 @@ const {
 } = require("./contacts");
 
 const {
-    authSchemas,
+    authSchema,
     User
 } = require('./user')
 
-module.exports = { contactsSchemas, authSchemas, Contact, User };
+module.exports = { contactsSchemas, authSchema, Contact, User };

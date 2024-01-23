@@ -20,14 +20,10 @@ const userSchema = new Schema({
     token: String,
 }, { versionKey: false, timestamps: true });
 
-const registerSchema = Joi.object({
+const authSchema = Joi.object({
   email: Joi.string().required(),
   password: Joi.string().required(),
 })
-
-const authSchemas = {
-  registerSchema,
-}
 
 userSchema.post('save', mongooseErrorHandler);
 
@@ -36,5 +32,5 @@ const User = model('user', userSchema);
 
 module.exports = {
   User,
-  authSchemas
+  authSchema
 }

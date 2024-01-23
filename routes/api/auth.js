@@ -3,10 +3,10 @@ const router = express.Router();
 const ctrl = require('../../controllers/auth')
 
 const { validateBody } = require('../../middlewares');
-const { authSchemas } = require('../../service/schemas');
+const { authSchema } = require('../../service/schemas');
 
-router.post('/register', validateBody(authSchemas.registerSchema), ctrl.register)
+router.post('/register', validateBody(authSchema), ctrl.register)
 
-router.post('/login', validateBody(authSchemas.registerSchema), ctrl.login)
+router.post('/login', validateBody(authSchema), ctrl.login)
 
 module.exports = router;
