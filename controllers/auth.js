@@ -7,7 +7,7 @@ const register = async (req, res, next) => {
     const hashedPassword = bcrypt.hashSync(password, 10);
 
     const user = await createUser({ email, password: hashedPassword });
-    res.status(200).json({
+    res.status(201).json({
         user: {
           email: user.email,
           subscription: user.subscription,
