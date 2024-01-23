@@ -1,4 +1,4 @@
-const contacts = require("../service");
+const contacts = require("../service/contacts");
 const { ctrlWrapper } = require("../helpers");
 
 const getAll = async (req, res, next) => {

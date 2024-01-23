@@ -1,5 +1,5 @@
 const { HttpError } = require("../helpers");
-const { getContactById } = require("../service");
+const { getContactById } = require("../service/contacts");
 
 const isContactWithIdExist = async (req, res, next) => {
     const { contactId } = req.params;
