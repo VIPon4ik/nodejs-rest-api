@@ -17,6 +17,10 @@ const contact = new Schema(
             type: Boolean,
             default: false,
         },
+        owner: {
+            type: Schema.Types.ObjectId,
+            ref: "user",
+        },
     },
     { versionKey: false, timestamps: true }
 );
@@ -25,17 +29,17 @@ const Contact = model("contact", contact);
 
 const contactsValidationSchema = Joi.object({
     name: Joi.string().required(),
-    email: Joi.string(),
-    phone: Joi.string(),
+    email: Joi.string().required(),
+    phone: Joi.string().required(),
 });
 
 const favoriteValidationSchema = Joi.object({
     favorite: Joi.boolean().required(),
-})
+});
 
 const schemas = {
     contactsValidationSchema,
-    favoriteValidationSchema
+    favoriteValidationSchema,
 };
 
 module.exports = {
