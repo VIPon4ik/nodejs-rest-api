@@ -19,10 +19,18 @@ const userSchema = new Schema({
     token: String,
 }, { versionKey: false, timestamps: true });
 
+const registerSchema = Joi.object({
+  email: Joi.string().required(),
+  password: Joi.string().required(),
+})
 
+const authSchemas = {
+  registerSchema,
+}
 
 const User = model('user', userSchema);
 
 module.exports = {
-  User
+  User,
+  authSchemas
 }

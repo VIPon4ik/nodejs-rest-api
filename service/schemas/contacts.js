@@ -37,12 +37,12 @@ const favoriteValidationSchema = Joi.object({
     favorite: Joi.boolean().required(),
 });
 
-const schemas = {
+const contactsSchemas = {
     contactsValidationSchema,
     favoriteValidationSchema,
 };
 
 module.exports = {
-    schemas,
+    contactsSchemas,
     Contact,
 };
