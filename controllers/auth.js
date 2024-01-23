@@ -1,9 +1,10 @@
 const { ctrlWrapper, HttpError } = require("../helpers");
-const bcrypt = require("bcrypt");
 const { createUser, findUser } = require("../service/auth");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
-const SECRET_KEY = "myverysecretkey123456789(*&^%$#@!";
+const SECRET_KEY = process.env.SECRET_KEY || "myverysecretkey123456789(*&^%$#@!";
 
 const register = async (req, res, next) => {
     const { email, password } = req.body;
@@ -24,7 +25,7 @@ const login = async (req, res, next) => {
     if (!user) {
         throw HttpError(401, "Email or password is wrong");
     }
-    
+
     const isPasswordRight = await bcrypt.compare(password, user.password);
 
     if (!isPasswordRight) {
