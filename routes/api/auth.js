@@ -7,4 +7,6 @@ const { authSchemas } = require('../../service/schemas');
 
 router.post('/register', validateBody(authSchemas.registerSchema), ctrl.register)
 
+router.post('/login', validateBody(authSchemas.registerSchema), ctrl.login)
+
 module.exports = router;
