@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Joi = require('joi');
+const { mongooseErrorHandler } = require("../../helpers");
 
 const userSchema = new Schema({
     password: {
@@ -28,7 +29,10 @@ const authSchemas = {
   registerSchema,
 }
 
+userSchema.post('save', mongooseErrorHandler);
+
 const User = model('user', userSchema);
+
 
 module.exports = {
   User,
