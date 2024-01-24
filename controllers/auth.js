@@ -49,7 +49,14 @@ const login = async (req, res, next) => {
     });
 };
 
+const logout = async (req,res,next) => {
+    const { _id } = req.user;
+    await updateTokenById(_id, '');
+    res.status(204).end();
+}
+
 module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
+    logout: ctrlWrapper(logout),
 };
