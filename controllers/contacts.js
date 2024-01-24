@@ -2,7 +2,8 @@ const contacts = require("../service/contacts");
 const { ctrlWrapper } = require("../helpers");
 
 const getAll = async (req, res, next) => {
-    const result = await contacts.listContacts();
+    const { page = 1, limit = 10 } = req.query;
+    const result = await contacts.listContacts(page, limit);
     res.status(200).json(result);
 };
 
