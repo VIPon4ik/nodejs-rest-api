@@ -1,7 +1,7 @@
 const { Contact } = require("./schemas");
 
-const listContacts = async (page, limit, favorite) => {
-    const query = {};
+const listContacts = async (page, limit, favorite, userId) => {
+    const query = { owner: userId };
     const skip = (page - 1) * limit;
 
     if (favorite) {
@@ -21,8 +21,8 @@ const removeContact = async (contactId) => {
     return Contact.findByIdAndDelete(contactId);
 };
 
-const addContact = async (body) => {
-    return Contact.create(body);
+const addContact = async (body, userId) => {
+    return Contact.create({...body, owner: userId});
 };
 
 const putContact = async (contactId, body) => {
