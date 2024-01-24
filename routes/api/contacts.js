@@ -6,6 +6,7 @@ const {
     isContactWithIdExist,
     isValidId,
     authenticate,
+    isOwnerCurrentUser
 } = require("../../middlewares");
 const { contactsSchemas } = require("../../service/schemas");
 
@@ -18,6 +19,7 @@ router.get(
     authenticate,
     isValidId,
     isContactWithIdExist,
+    isOwnerCurrentUser,
     ctrl.getById
 );
 
@@ -33,6 +35,7 @@ router.delete(
     authenticate,
     isValidId,
     isContactWithIdExist,
+    isOwnerCurrentUser,
     ctrl.deleteById
 );
 
@@ -42,6 +45,7 @@ router.put(
     isValidId,
     isContactWithIdExist,
     validateBody(contactsSchemas.contactsValidationSchema),
+    isOwnerCurrentUser,
     ctrl.putById
 );
 
@@ -50,6 +54,7 @@ router.patch(
     authenticate,
     isValidId,
     isContactWithIdExist,
+    isOwnerCurrentUser,
     validateBody(contactsSchemas.favoriteValidationSchema),
     ctrl.patchById
 );
