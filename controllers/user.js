@@ -1,5 +1,5 @@
 const { ctrlWrapper, HttpError } = require("../helpers");
-const { createUser, findUser, updateTokenById } = require("../service/auth");
+const { createUser, findUser, updateTokenById } = require("../service/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
