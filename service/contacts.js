@@ -1,8 +1,15 @@
 const { Contact } = require("./schemas");
 
-const listContacts = async (page, limit) => {
-    return Contact.find({})
-        .skip((page - 1) * limit)
+const listContacts = async (page, limit, favorite) => {
+    const query = {};
+    const skip = (page - 1) * limit;
+
+    if (favorite) {
+        query.favorite = favorite;
+    }
+
+    return Contact.find(query)
+        .skip(skip)
         .limit(limit);
 };
 
