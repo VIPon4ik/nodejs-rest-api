@@ -1,5 +1,5 @@
 const { ctrlWrapper, HttpError } = require("../helpers");
-const { createUser, findUser, updateTokenById } = require("../service/user");
+const { createUser, findUser, updateTokenById, updateSubscripitonById } = require("../service/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
@@ -63,9 +63,19 @@ const current = async (req,res,next) => {
     });
 }
 
+const updateSubscripiton = async (req,res,next) => {
+    const { _id } = req.user;
+    const { subscription: oldSubscription } = req.body;
+    const { subscription } = await updateSubscripitonById(_id, oldSubscription)
+    res.json({
+        subscription,
+    })
+}
+
 module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
     logout: ctrlWrapper(logout),
     current: ctrlWrapper(current),
+    updateSubscripiton: ctrlWrapper(updateSubscripiton),
 };
