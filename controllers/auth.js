@@ -55,8 +55,17 @@ const logout = async (req,res,next) => {
     res.status(204).end();
 }
 
+const current = async (req,res,next) => {
+    const { user } = req;
+    res.json({
+        email: user.email,
+        subscription: user.subscription,
+    });
+}
+
 module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
     logout: ctrlWrapper(logout),
+    current: ctrlWrapper(current),
 };
