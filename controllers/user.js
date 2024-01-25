@@ -1,17 +1,23 @@
 const { ctrlWrapper, HttpError } = require("../helpers");
-const { createUser, findUser, updateTokenById, updateSubscripitonById, updateAvatarById } = require("../service/user");
+const {
+    createUser,
+    findUser,
+    updateTokenById,
+    updateSubscripitonById,
+    updateAvatarById,
+} = require("../service/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const path = require('path');
-const { nanoid } = require('nanoid');
-const fs = require('fs/promises');
-require('dotenv').config();
-// const Jimp = require("jimp");
+const path = require("path");
+const { nanoid } = require("nanoid");
+const fs = require("fs/promises");
+require("dotenv").config();
+const Jimp = require("jimp");
 
+const publicPath = path.join(__dirname, "../", "public", "avatars");
 
-const publicPath = path.join(__dirname, '../', 'public', 'avatars')
-
-const SECRET_KEY = process.env.SECRET_KEY || "myverysecretkey123456789(*&^%$#@!";
+const SECRET_KEY =
+    process.env.SECRET_KEY || "myverysecretkey123456789(*&^%$#@!";
 
 const register = async (req, res, next) => {
     const { email, password } = req.body;
@@ -56,40 +62,46 @@ const login = async (req, res, next) => {
     });
 };
 
-const logout = async (req,res,next) => {
+const logout = async (req, res, next) => {
     const { _id } = req.user;
-    await updateTokenById(_id, '');
+    await updateTokenById(_id, "");
     res.status(204).end();
-}
+};
 
-const current = async (req,res,next) => {
+const current = async (req, res, next) => {
     const { user } = req;
     res.json({
         email: user.email,
         subscription: user.subscription,
     });
-}
+};
 
-const updateSubscripiton = async (req,res,next) => {
+const updateSubscripiton = async (req, res, next) => {
     const { _id } = req.user;
     const { subscription: oldSubscription } = req.body;
-    const { subscription } = await updateSubscripitonById(_id, oldSubscription)
+    const { subscription } = await updateSubscripitonById(_id, oldSubscription);
     res.json({
         subscription,
-    })
-}
+    });
+};
 
-const updateAvatar = async (req,res,next) => {
+const updateAvatar = async (req, res, next) => {
     const { _id } = req.user;
-    const { originalname, path: oldPath} = req.file;
+    const { originalname, path: oldPath } = req.file;
+    // Read and resize image
+    const image = await Jimp.read(oldPath);
+    await image.resize(250, 250).write(oldPath);
+    // Made new unieq name
     const newName = `${nanoid()}_${originalname}`;
     const newPath = path.join(publicPath, `${newName}`);
-    await fs.rename(oldPath, newPath)
-    await updateAvatarById(_id, newPath)
+
+    await fs.rename(oldPath, newPath);
+    await updateAvatarById(_id, newPath);
+
     res.json({
         avatarURL: newPath,
-    })
-}
+    });
+};
 
 module.exports = {
     register: ctrlWrapper(register),
