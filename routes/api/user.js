@@ -4,9 +4,16 @@ const ctrl = require("../../controllers/user");
 const multer = require("multer");
 const path = require("path");
 
-const uploadPath = path.join(__dirname, "temp");
+const uploadPath = path.join(__dirname, "../", "../", "temp");
 
-const upload = multer({ dest: uploadPath });
+const multerConfig = multer.diskStorage({
+    destination: uploadPath,
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    },
+});
+
+const upload = multer({ storage: multerConfig });
 
 const { validateBody, authenticate } = require("../../middlewares");
 const { authSchema, subscriptionSchema } = require("../../service/schemas");
@@ -26,6 +33,11 @@ router.patch(
     ctrl.updateSubscripiton
 );
 
-router.patch("/avatars", authenticate, upload.single('avatar'), ctrl.updateAvatar);
+router.patch(
+    "/avatars",
+    authenticate,
+    upload.single("avatar"),
+    ctrl.updateAvatar
+);
 
 module.exports = router;

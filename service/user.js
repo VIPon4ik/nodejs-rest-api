@@ -22,9 +22,14 @@ const updateSubscripitonById = async (id, subscription) => {
     ).select("subscription -_id");
 };
 
+const updateAvatarById = async (id, avatarURL) => {
+    return await User.findByIdAndUpdate(id, { avatarURL }, { new: true }).select('avatarURL');
+}
+
 module.exports = {
     createUser,
     findUser,
     updateTokenById,
     updateSubscripitonById,
+    updateAvatarById
 };

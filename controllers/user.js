@@ -1,8 +1,15 @@
 const { ctrlWrapper, HttpError } = require("../helpers");
-const { createUser, findUser, updateTokenById, updateSubscripitonById } = require("../service/user");
+const { createUser, findUser, updateTokenById, updateSubscripitonById, updateAvatarById } = require("../service/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const path = require('path');
+const { nanoid } = require('nanoid');
+const fs = require('fs/promises');
 require('dotenv').config();
+// const Jimp = require("jimp");
+
+
+const publicPath = path.join(__dirname, '../', 'public', 'avatars')
 
 const SECRET_KEY = process.env.SECRET_KEY || "myverysecretkey123456789(*&^%$#@!";
 
@@ -73,7 +80,15 @@ const updateSubscripiton = async (req,res,next) => {
 }
 
 const updateAvatar = async (req,res,next) => {
-    console.log(req.file);
+    const { _id } = req.user;
+    const { originalname, path: oldPath} = req.file;
+    const newName = `${nanoid()}_${originalname}`;
+    const newPath = path.join(publicPath, `${newName}`);
+    await fs.rename(oldPath, newPath)
+    await updateAvatarById(_id, newPath)
+    res.json({
+        avatarURL: newPath,
+    })
 }
 
 module.exports = {
