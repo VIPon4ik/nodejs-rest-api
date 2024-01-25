@@ -72,10 +72,15 @@ const updateSubscripiton = async (req,res,next) => {
     })
 }
 
+const updateAvatar = async (req,res,next) => {
+    console.log(req.file);
+}
+
 module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
     logout: ctrlWrapper(logout),
     current: ctrlWrapper(current),
     updateSubscripiton: ctrlWrapper(updateSubscripiton),
+    updateAvatar: ctrlWrapper(updateAvatar),
 };
