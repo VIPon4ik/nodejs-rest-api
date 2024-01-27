@@ -15,7 +15,7 @@ const multerConfig = multer.diskStorage({
 
 const upload = multer({ storage: multerConfig });
 
-const { validateBody, authenticate } = require("../../middlewares");
+const { validateBody, authenticate, isFileAttached } = require("../../middlewares");
 const { authSchema, subscriptionSchema } = require("../../service/schemas");
 
 router.post("/register", validateBody(authSchema), ctrl.register);
@@ -36,6 +36,7 @@ router.patch(
 router.patch(
     "/avatars",
     authenticate,
+    isFileAttached,
     upload.single("avatar"),
     ctrl.updateAvatar
 );
