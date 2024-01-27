@@ -36,8 +36,8 @@ router.patch(
 router.patch(
     "/avatars",
     authenticate,
-    isFileAttached,
     upload.single("avatar"),
+    isFileAttached,
     ctrl.updateAvatar
 );
 
