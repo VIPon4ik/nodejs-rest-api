@@ -15,17 +15,40 @@ const { nanoid } = require("nanoid");
 const fs = require("fs/promises");
 require("dotenv").config();
 const Jimp = require("jimp");
+const sgMail = require("@sendgrid/mail");
 
 const publicPath = path.join(__dirname, "../", "public", "avatars");
 
 const SECRET_KEY =
     process.env.SECRET_KEY || "myverysecretkey123456789(*&^%$#@!";
 
+const DOMEN = process.env.DOMEN || "localhost:3000";
+
+const SENDGRID_API_KEY =
+    process.env.SENDGRID_API_KEY ||
+    "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";
+
+sgMail.setApiKey(SENDGRID_API_KEY);
+
 const register = async (req, res, next) => {
     const { email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
+    const verificationToken = nanoid();
 
-    const user = await createUser({ email, password: hashedPassword });
+    const msg = {
+        to: email,
+        from: "financedmytro@gmail.com",
+        subject: "Email verification",
+        html: `<a target="_blank" href="${DOMEN}/users/verify/${verificationToken}"></a>`,
+    };
+
+    await sgMail.send(msg).catch((error) => console.log(error));
+
+    const user = await createUser({
+        email,
+        password: hashedPassword,
+        verificationToken,
+    });
     res.status(201).json({
         user: {
             email: user.email,
