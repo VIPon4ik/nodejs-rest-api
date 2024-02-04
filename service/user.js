@@ -26,10 +26,20 @@ const updateAvatarById = async (id, avatarURL) => {
     return await User.findByIdAndUpdate(id, { avatarURL }, { new: true }).select('avatarURL');
 }
 
+const findUserByVerificationToken = async (verificationToken) => {
+    return await User.findOne({ verificationToken });
+}
+
+const updateUserVerification = async (verificationToken) => {
+    return await User.findOneAndUpdate({ verificationToken }, { verificationToken: null, verify: true });
+}
+
 module.exports = {
     createUser,
     findUser,
     updateTokenById,
     updateSubscripitonById,
-    updateAvatarById
+    updateAvatarById,
+    findUserByVerificationToken,
+    updateUserVerification
 };

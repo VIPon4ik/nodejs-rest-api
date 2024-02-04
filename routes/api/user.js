@@ -18,6 +18,8 @@ const upload = multer({ storage: multerConfig });
 const { validateBody, authenticate, isFileAttached } = require("../../middlewares");
 const { authSchema, subscriptionSchema } = require("../../service/schemas");
 
+router.get('/verify/:verificationToken', ctrl.verifyUser);
+
 router.post("/register", validateBody(authSchema), ctrl.register);
 
 router.post("/login", validateBody(authSchema), ctrl.login);

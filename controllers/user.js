@@ -5,6 +5,8 @@ const {
     updateTokenById,
     updateSubscripitonById,
     updateAvatarById,
+    findUserByVerificationToken,
+    updateUserVerification,
 } = require("../service/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -103,6 +105,21 @@ const updateAvatar = async (req, res, next) => {
     });
 };
 
+const verifyUser = async (req, res, next) => {
+    const { verificationToken } = req.params;
+    const user = await findUserByVerificationToken(verificationToken);
+
+    if (!user) {
+        HttpError(404, "User not found");
+    }
+
+    await updateUserVerification(verificationToken);
+
+    res.json({
+        message: "Verification successful",
+    });
+};
+
 module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
@@ -110,4 +127,5 @@ module.exports = {
     current: ctrlWrapper(current),
     updateSubscripiton: ctrlWrapper(updateSubscripiton),
     updateAvatar: ctrlWrapper(updateAvatar),
+    verifyUser: ctrlWrapper(verifyUser),
 };
