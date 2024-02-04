@@ -26,7 +26,7 @@ const DOMEN = process.env.DOMEN || "localhost:3000";
 
 const SENDGRID_API_KEY =
     process.env.SENDGRID_API_KEY ||
-    "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";
+    "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";
 
 sgMail.setApiKey(SENDGRID_API_KEY);
 
@@ -39,10 +39,10 @@ const register = async (req, res, next) => {
         to: email,
         from: "financedmytro@gmail.com",
         subject: "Email verification",
-        html: `<a target="_blank" href="${DOMEN}/users/verify/${verificationToken}"></a>`,
+        html: `<p><a target="_blank" href="${DOMEN}/api/users/verify/${verificationToken}">Click here</a> to verify your email</p>`,
     };
 
-    await sgMail.send(msg).catch((error) => console.log(error));
+    await sgMail.send(msg);
 
     const user = await createUser({
         email,
