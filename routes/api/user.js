@@ -15,14 +15,14 @@ const multerConfig = multer.diskStorage({
 
 const upload = multer({ storage: multerConfig });
 
-const { validateBody, authenticate, isFileAttached } = require("../../middlewares");
+const { validateBody, authenticate, isFileAttached, isUserVerified } = require("../../middlewares");
 const { authSchema, subscriptionSchema } = require("../../service/schemas");
 
 router.get('/verify/:verificationToken', ctrl.verifyUser);
 
 router.post("/register", validateBody(authSchema), ctrl.register);
 
-router.post("/login", validateBody(authSchema), ctrl.login);
+router.post("/login", validateBody(authSchema), isUserVerified, ctrl.login);
 
 router.post("/logout", authenticate, ctrl.logout);
 
