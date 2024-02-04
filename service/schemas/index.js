@@ -6,7 +6,8 @@ const {
 const {
     authSchema,
     subscriptionSchema,
+    emailSchema,
     User
 } = require('./user')
 
-module.exports = { contactsSchemas, authSchema, subscriptionSchema, Contact, User };
+module.exports = { contactsSchemas, authSchema, subscriptionSchema, emailSchema, Contact, User };

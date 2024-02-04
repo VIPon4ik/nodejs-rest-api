@@ -16,9 +16,11 @@ const multerConfig = multer.diskStorage({
 const upload = multer({ storage: multerConfig });
 
 const { validateBody, authenticate, isFileAttached, isUserVerified } = require("../../middlewares");
-const { authSchema, subscriptionSchema } = require("../../service/schemas");
+const { authSchema, subscriptionSchema, emailSchema } = require("../../service/schemas");
 
 router.get('/verify/:verificationToken', ctrl.verifyUser);
+
+router.post('/verify', validateBody(emailSchema), ctrl.resendVerification)
 
 router.post("/register", validateBody(authSchema), ctrl.register);
 

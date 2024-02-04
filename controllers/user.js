@@ -113,10 +113,10 @@ const updateSubscripiton = async (req, res, next) => {
 const updateAvatar = async (req, res, next) => {
     const { _id } = req.user;
     const { originalname, path: oldPath } = req.file;
-    // Read and resize image
+
     const image = await Jimp.read(oldPath);
     await image.resize(250, 250).write(oldPath);
-    // Made new unieq name
+
     const newName = `${nanoid()}_${originalname}`;
     const newPath = path.join(publicPath, `${newName}`);
 
@@ -143,6 +143,28 @@ const verifyUser = async (req, res, next) => {
     });
 };
 
+const resendVerification = async (req, res, next) => {
+    const { email } = req.body;
+    const [user] = await findUser(email);
+
+    if (user.verify) {
+        next(HttpError(400, "Verification has already been passed"));
+    }
+
+    const msg = {
+        to: email,
+        from: "financedmytro@gmail.com",
+        subject: "Email verification",
+        html: `<p><a target="_blank" href="${DOMEN}/api/users/verify/${user.verificationToken}">Click here</a> to verify your email</p>`,
+    };
+
+    await sgMail.send(msg);
+
+    res.json({
+        "message": "Verification email sent"
+    })
+};
+
 module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
@@ -151,4 +173,5 @@ module.exports = {
     updateSubscripiton: ctrlWrapper(updateSubscripiton),
     updateAvatar: ctrlWrapper(updateAvatar),
     verifyUser: ctrlWrapper(verifyUser),
+    resendVerification: ctrlWrapper(resendVerification),
 };

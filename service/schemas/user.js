@@ -38,6 +38,10 @@ const subscriptionSchema = Joi.object({
   subscription: Joi.string().valid('starter', 'pro', 'business').required(), 
 })
 
+const emailSchema = Joi.object({
+  email: Joi.string().required(),
+})
+
 userSchema.post('save', mongooseErrorHandler);
 
 const User = model('user', userSchema);
@@ -46,5 +50,6 @@ const User = model('user', userSchema);
 module.exports = {
   User,
   authSchema,
-  subscriptionSchema
+  subscriptionSchema,
+  emailSchema
 }
