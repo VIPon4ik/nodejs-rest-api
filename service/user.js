@@ -1,0 +1,45 @@
+const { User } = require("./schemas");
+const gravatar = require("gravatar");
+
+const createUser = async ({ email, password, verificationToken }) => {
+    const avatarURL = gravatar.url(email);
+    return await User.create({ email, password, avatarURL, verificationToken });
+};
+
+const findUser = async (email) => {
+    return await User.find({ email });
+};
+
+const updateTokenById = async (id, token) => {
+    return await User.findByIdAndUpdate(id, { token });
+};
+
+const updateSubscripitonById = async (id, subscription) => {
+    return await User.findByIdAndUpdate(
+        id,
+        { subscription },
+        { new: true }
+    ).select("subscription -_id");
+};
+
+const updateAvatarById = async (id, avatarURL) => {
+    return await User.findByIdAndUpdate(id, { avatarURL }, { new: true }).select('avatarURL');
+}
+
+const findUserByVerificationToken = async (verificationToken) => {
+    return await User.findOne({ verificationToken });
+}
+
+const updateUserVerification = async (verificationToken) => {
+    return await User.findOneAndUpdate({ verificationToken }, { verificationToken: null, verify: true });
+}
+
+module.exports = {
+    createUser,
+    findUser,
+    updateTokenById,
+    updateSubscripitonById,
+    updateAvatarById,
+    findUserByVerificationToken,
+    updateUserVerification
+};
