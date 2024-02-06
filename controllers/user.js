@@ -26,12 +26,18 @@ const DOMEN = process.env.DOMEN || "localhost:3000";
 
 const SENDGRID_API_KEY =
     process.env.SENDGRID_API_KEY ||
-    "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";
+    "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";
 
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 const register = async (req, res, next) => {
     const { email, password } = req.body;
+    const [existingUser] = await findUser(email);
+    
+    if (existingUser) {
+        throw HttpError(409, 'User with this email already exist')
+    }
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = nanoid();
 
